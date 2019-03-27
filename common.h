@@ -11,7 +11,7 @@
 
 typedef long long int lli;
 using namespace std;
-lli LARGE_NUM = 1000000007;
+// #define int long long int
 
 inline void swap(int &a, int &b) {
     int tmp = a;
