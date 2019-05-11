@@ -8,7 +8,7 @@ targets=$(echo -e $cpplist|xargs)
 okflag=1
 for e in ${targets[@]}; do
     echo "$e"
-    clang++ "$e"
+    clang++ -std=c++11 "$e"
     ./a.out
     if [ $? -ne 0 ]; then
         echo "FAILUE"
