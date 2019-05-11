@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <vector>
 #include <algorithm>
 #include <string>
@@ -19,13 +20,15 @@ inline void swap(int &a, int &b) {
     b = tmp;
 }
 
-inline int euclid(int a, int b) {
-    if (a > b) swap(a, b);
-    int r = a % b;
-    while (r > 0) {
-        a = b;
-        b = r;
-        r = a % b;
-    }
-    return b;
+// signed main() {
+//     return 0;
+// }
+
+// テスト用関数郡
+bool inline vector_check(vector<int> v1, vector<int> v2) {
+    return v1.size() == v2.size() && equal(v1.cbegin(), v1.cend(), v2.cbegin());
+}
+
+bool inline map_check(map<int, int> m1, map<int, int> m2) {
+    return m1.size() == m2.size() && equal(m1.cbegin(), m1.cend(), m2.cbegin());
 }
