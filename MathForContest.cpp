@@ -70,6 +70,23 @@ map<int, int> prime_factor(int n) {
     return res;
 }
 
+/**
+ * エラトステネスの篩
+ * @param: n [2, n) の素数
+ * @order: O(NloglogN)
+ **/
+vector<int> sieve(int n) {
+    vector<int> ret;
+    vector<int> is_prime_arr(n, 1);
+    for (int i = 2; i < n; i++) {
+        if (is_prime_arr[i]) {
+            ret.push_back(i);
+            for (int j = 2 * i; j <= n; j += i) is_prime_arr[j] = 0;
+        }
+    }
+    return ret;
+}
+
 int main() {
     assert(gcd(100, 10) == 10);
     assert(gcd(9, 12) == 3);
@@ -92,5 +109,9 @@ int main() {
 
     assert(map_check(prime_factor(12), {{2, 2}, {3, 1}}));
     assert(map_check(prime_factor(9), {{3, 2}}));
+
+    assert(vector_check(sieve(10), {2, 3, 5, 7}));
+    assert(vector_check(sieve(13), {2, 3, 5, 7, 11}));
+
     cout << "PRIME: PASS" << endl;
 }
