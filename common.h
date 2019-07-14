@@ -12,6 +12,7 @@
 
 typedef long long int lli;
 using namespace std;
+typedef pair<int, int> ii;
 // #define int long long int
 
 inline void swap(int &a, int &b) {

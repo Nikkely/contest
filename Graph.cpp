@@ -53,6 +53,54 @@ bool has_negative_loop(vector<Edge> edges, int V) {
     return false;
 }
 
+/**
+ * Dijkstra
+ * @param vector<vector<Edge> > edges は各頂点からの辺
+ * @order O(|E| log |V|)
+ * ヒープで実装
+ */
+vector<int> dijkstra(vector<vector<Edge> > G, int V, int s) {
+    priority_queue<ii, vector<ii>, greater<ii> > que; // (min cost, index)
+    vector<int> dist(V);
+    for (int i = 0; i < V; ++i) {
+        dist[i] = INF;
+    }
+    dist[s] = 0;
+    que.push(ii(0, s));
+
+    while(!que.empty()) {
+        ii dv = que.top(); que.pop();
+        int v = dv.second;
+        if (dist[v] < dv.first) continue;
+
+        for (int i = 0; i < G[v].size(); i++) {
+            Edge e = G[v][i];
+            if (dist[e.to] > dist[v] + e.cost) {
+                dist[e.to] = dist[v] + e.cost;
+                que.push(ii(dist[e.to], e.to));
+            }
+        }
+    }
+
+    return dist;
+}
+
+/**
+ * warshall-floyd閉路チェック
+ * @order O(|V|^3)
+ * d[i][i] < 0 => 閉路
+ */
+void warshall_floyd(int *(*d), int V) {
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+            }
+        }
+    }
+}
+
+
 int main() {
 
     vector<Edge> edges = {
@@ -71,5 +119,21 @@ int main() {
     edges.push_back(Edge{4, 0, -30});
     assert(has_negative_loop(edges, 5));
     cout << "negative-loop check:PASS" << endl;
+
+    vector<Edge> edges_ = {
+        Edge{0, 2, 2},
+        Edge{0, 1, 5},
+        Edge{1, 2, 4},
+        Edge{1, 3, 2},
+        Edge{2, 3, 6},
+        Edge{2, 4, 10},
+        Edge{3, 4, 1}
+    };
+    vector<vector<Edge> > G(5);
+    for (int i = 0; i < edges_.size(); i++) {
+        G[edges_[i].from].push_back(edges_[i]);
+    }
+    assert(vector_check(dijkstra(G, 5, 0), {0, 5, 2, 7, 8}));
+    cout << "Dijkstra: PASS" << endl;
     return 0;
 }
