@@ -4,30 +4,99 @@
 #include <algorithm>
 #include <string>
 #include <queue>
-#include<iomanip>
+#include <iomanip>
+#include <set>
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+using namespace std;
+
 #define rep(i,n) for(int i=0,i##_len=(n);i<i##_len;++i)
 #define reps(i,n) for(int i=1,i##_len=(n);i<=i##_len;++i)
 #define rrep(i,n) for(int i=((int)((n)-1));i>=0;--i)
 #define rreps(i,n) for(int i=((int)(n));i>0;--i)
+#define repi(itr, ds) for (auto itr = ds.begin(); itr != ds.end(); itr++)
 #define ALL(x) (x).begin(),(x).end()
 #define SZ(x) ((int)(x).size())
 #define ZERO(a) memset(a,0,sizeof(a))
 #define BIT(n) (1LL<<(n))
 #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
-#ifdef LOCAL
-    #define eprintf(...) fprintf(stderr, __VA_ARGS__)
+
+// vector
+template <typename T>
+istream &operator>>(istream &is, vector<T> &vec) {
+    for (T &x : vec) is >> x;
+    return is;
+}
+// pair
+template <typename T, typename U>
+ostream &operator<<(ostream &os, pair<T, U> &pair_var) {
+    os << "(" << pair_var.first << ", " << pair_var.second << ")";
+    return os;
+}
+// vector
+template <typename T>
+ostream &operator<<(ostream &os, const vector<T> &vec) {
+    os << "{";
+    for (int i = 0; i < vec.size(); i++) {
+        os << vec[i] << (i + 1 == vec.size() ? "" : ", ");
+    }
+    os << "}";
+    return os;
+}
+// map
+template <typename T, typename U>
+ostream &operator<<(ostream &os, map<T, U> &map_var) {
+    os << "{";
+    repi(itr, map_var) {
+        os << *itr;
+        itr++;
+        if (itr != map_var.end()) os << ", ";
+        itr--;
+    }
+    os << "}";
+    return os;
+}
+// set
+template <typename T>
+ostream &operator<<(ostream &os, set<T> &set_var) {
+    os << "{";
+    repi(itr, set_var) {
+        os << *itr;
+        itr++;
+        if (itr != set_var.end()) os << ", ";
+        itr--;
+    }
+    os << "}";
+    return os;
+}
+#define DUMPOUT cout
+void dump_func() {
+    DUMPOUT << endl;
+}
+template <class Head, class... Tail>
+void dump_func(Head &&head, Tail &&... tail) {
+    DUMPOUT << head;
+    if (sizeof...(Tail) > 0) {
+        DUMPOUT << ", ";
+    }
+    dump_func(std::move(tail)...);
+}
+#ifdef LOCAL_
+#define dump(...)                                                              \
+    DUMPOUT << "  " << string(#__VA_ARGS__) << ": "                            \
+            << "[" << to_string(__LINE__) << ":" << __FUNCTION__ << "]"        \
+            << endl                                                            \
+            << "    ",                                                         \
+        dump_func(__VA_ARGS__)
 #else
-    #define eprintf(...) 4545
+#define dump(...)
 #endif
 
 typedef long long int lli;
-using namespace std;
 typedef pair<int, int> ii;
 typedef priority_queue<int, vector<int>, greater<int> > heapq;
 int dx[4]={1,0,-1,0};
