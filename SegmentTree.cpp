@@ -49,6 +49,29 @@ class SegTree { // RMQ
         int big;
 };
 
+class BITree { // 1-index
+    public:
+        BITree(int _n) {
+            n = _n;
+            for (int i = 0; i <= n; i++) bit[i] = 0;
+        }
+        int sum(int i) {
+            int s = 0;
+            for (; i > 0; i -= i & -i) { // 最後の1ビット減算
+                s += bit[i];
+            }
+            return s;
+        }
+
+        void add(int i, int x) {
+            for (; i <= n; i += i & -i) {
+                bit[i] += x;
+            }
+        }
+    private:
+        int bit[(1 << 17)  + 1], n;
+};
+
 int main() {
     SegTree st(8);
     st.update(0, 5); st.update(1, 3); st.update(2, 7); st.update(3, 9);
@@ -60,5 +83,28 @@ int main() {
     assert(st.query(3, 8) == 2);
     assert(st.query(3, 4) == 9);
     cout << "Segment Tree: PASS" << endl;
+
+    // せっかくなので転倒数を求める
+    {
+        BITree bit(4);
+        int a[] = {3, 1, 4, 2};
+        int ans = 0;
+        for (int j = 0; j < 4; j++) {
+            bit.add(a[j], 1);
+            ans += j + 1 - bit.sum(a[j]);
+        }
+        assert(ans == 3);
+    }
+    {
+        BITree bit(7);
+        int a[] = {3, 1, 4, 2, 5, 7, 6};
+        int ans = 0;
+        for (int j = 0; j < 7; j++) {
+            bit.add(a[j], 1);
+            ans += j + 1 - bit.sum(a[j]);
+        }
+        assert(ans == 4);
+    }
+    cout << "Binary Index Tree: PASS" << endl;
     return 0;
 }
