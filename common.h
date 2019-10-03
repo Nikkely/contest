@@ -6,6 +6,7 @@
 #include <queue>
 #include <iomanip>
 #include <set>
+#include <unordered_map>
 
 #include <math.h>
 #include <stdio.h>
@@ -15,15 +16,15 @@
 using namespace std;
 
 #define rep(i,n) for(int i=0,i##_len=(n);i<i##_len;++i)
-#define reps(i,n) for(int i=1,i##_len=(n);i<=i##_len;++i)
-#define rrep(i,n) for(int i=((int)((n)-1));i>=0;--i)
-#define rreps(i,n) for(int i=((int)(n));i>0;--i)
+#define repx(i,s,n) for(int i=s,i##_len=(n);i<i##_len;++i)
+#define rept(n) for(int ___i___=0,i##_len=(n);___i___<i##_len;++___i___)
 #define repi(itr, ds) for (auto itr = ds.begin(); itr != ds.end(); itr++)
 #define ALL(x) (x).begin(),(x).end()
 #define SZ(x) ((int)(x).size())
 #define ZERO(a) memset(a,0,sizeof(a))
 #define BIT(n) (1LL<<(n))
 #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define CEIL(x, y) (((x) + (y) - 1) / (y))
 
 // vector
 template <typename T>
@@ -101,13 +102,18 @@ typedef pair<int, int> ii;
 typedef priority_queue<int, vector<int>, greater<int> > heapq;
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
-// #define int long long int
 struct aaa{
     aaa(){
         cin.tie(0); ios::sync_with_stdio(0); cout<<fixed<<setprecision(20);
     };
 }aaaaaaa;
 
+// #define int long long int
+// struct S{
+//     bool operator<(const S& x) const {
+//         return ;
+//     }
+// };
 // signed main() {
 //     return 0;
 // }
