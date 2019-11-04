@@ -1,3 +1,6 @@
+/**
+ * Libraries
+ */
 #include <iostream>
 #include <map>
 #include <vector>
@@ -15,6 +18,9 @@
 
 using namespace std;
 
+/**
+ * macros
+ */
 #define rep(i,n) for(int i=0,i##_len=(n);i<i##_len;++i)
 #define repx(i,s,d,e) for(int i=s,i##_end=(e);i<i##_end;i+=d)
 #define repxr(i,s,d,e) for(int i=s,i##_end=(e);i>i##_end;i+=d)
@@ -27,6 +33,9 @@ using namespace std;
 #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define CEIL(x, y) (((x) + (y) - 1) / (y))
 
+/**
+ * standard input helpers
+ */
 // vector
 template <typename T>
 istream &operator>>(istream &is, vector<T> &vec) {
@@ -75,6 +84,9 @@ ostream &operator<<(ostream &os, set<T> &set_var) {
     os << "}";
     return os;
 }
+/**
+ * debug tools
+ */
 #define DUMPOUT cout
 void dump_func() {
     DUMPOUT << endl;
@@ -98,6 +110,9 @@ void dump_func(Head &&head, Tail &&... tail) {
 #define dump(...)
 #endif
 
+/**
+ * helpers
+ */
 typedef long long int lli;
 typedef pair<int, int> ii;
 typedef priority_queue<int, vector<int>, greater<int> > heapq;
@@ -108,7 +123,6 @@ struct aaa{
         cin.tie(0); ios::sync_with_stdio(0); cout<<fixed<<setprecision(20);
     };
 }aaaaaaa;
-
 // #define int long long int
 // struct S{
 //     bool operator<(const S& x) const {
@@ -119,13 +133,9 @@ struct aaa{
 //     return 0;
 // }
 
-inline void swap(int &a, int &b) {
-    int tmp = a;
-    a = b;
-    b = tmp;
-}
-
-// テスト用関数群
+/**
+ * for test
+ */
 bool inline vector_check(vector<int> v1, vector<int> v2) {
     return v1.size() == v2.size() && equal(v1.cbegin(), v1.cend(), v2.cbegin());
 }
