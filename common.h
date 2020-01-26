@@ -22,8 +22,8 @@ using namespace std;
  * macros
  */
 #define rep(i,n) for(int i=0,i##_len=(n);i<i##_len;++i)
-#define repx(i,s,d,e) for(int i=s,i##_end=(e);i<i##_end;i+=d)
-#define repxr(i,s,d,e) for(int i=s,i##_end=(e);i>i##_end;i+=d)
+#define repx(i,s,e,d) for(int i=s,i##_end=(e);i<i##_end;i+=d)
+#define repxr(i,s,e,d) for(int i=s,i##_end=(e);i>i##_end;i+=d)
 #define rept(n) for(int ___i___=0,i##_len=(n);___i___<i##_len;++___i___)
 #define repi(itr, ds) for (auto itr = ds.begin(); itr != ds.end(); itr++)
 #define ALL(x) (x).begin(),(x).end()
