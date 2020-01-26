@@ -25,12 +25,12 @@ template<int MOD> struct Modnum {
 
     constexpr Modnum& operator += (const Modnum& x) noexcept {
         val += x.val;
-        if (val >= MOD) val -= MOD;
+        val %= MOD;
         return *this;
     }
     constexpr Modnum& operator -= (const Modnum& x) noexcept {
         val -= x.val;
-        if (val < 0) val += MOD;
+        val = (val + MOD) % MOD;
         return *this;
     }
     constexpr Modnum& operator *= (const Modnum& x) noexcept {
@@ -46,7 +46,7 @@ template<int MOD> struct Modnum {
         return val == x.val;
     }
     constexpr bool operator != (const Modnum& x) const noexcept {
-        return val == x.val;
+        return val != x.val;
     }
 
     friend constexpr ostream& operator << (ostream &os, const Modnum<MOD>& x) noexcept {
