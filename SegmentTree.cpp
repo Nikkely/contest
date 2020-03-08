@@ -1,52 +1,56 @@
 #include "common.h"
 #include <cassert>
 
-class SegTree { // RMQ
-    public:
-        SegTree(int _n, int init = 1000000007) {
-            big = init;
-            n = 1;
-            while (n < _n) n *= 2;
+template<typename Monoid>
+class SegTree {
+public:
+    using F = function<Monoid(Monoid, Monoid)>;
 
-            for (int i = 0; i < 2 * n - 1; i++) {
-                dat[i] = init;
-            }
+    int size;
+    Monoid seg[(1 << 18) - 1];
+
+    const F f;
+    const Monoid M1;
+
+    SegTree(int n, const F _f, const Monoid& _M1) : f(_f), M1(_M1)
+    {
+        size = 1;
+        while (size < n) size <<= 1;
+        for (int i = 0; i < 2 * size - 1; i++) {
+            seg[i] = M1;
         }
+    }
 
-        void update(int k, int x) {
-            // インデックスを葉にもってくる
-            k += n - 1;
-            dat[k] = x;
+    void set(int k, const Monoid &x) {
+        seg[k + size] = x;
+    }
 
-            // 根へ向かう
-            while (k > 0) {
-                k = (k - 1) / 2;
-                dat[k] = min(dat[k * 2 + 1], dat[k * 2 + 2]);
-            }
+    void build() {
+        for (int k = size - 1; k > 0; k--) {
+            seg[k] = f(seg[2 * k], seg[2 * k + 1]);
         }
+    }
 
-        int query(int a, int b) {
-            return query(a, b, 0, 0, n);
+    void update(int k, const Monoid& x) {
+        k += size;
+        seg[k] = x;
+        while (k >>= 1) {
+            seg[k] = f(seg[2 * k], seg[2 * k + 1]);
         }
-        // 範囲[a, b)
-        // kは節点を表す
-        // l, rはkが葉の[l, r)に対応している
-        int query(int a, int b, int k, int l, int r) {
-            if (r <= a || b <= l) return big;
+    }
 
-            if (a <= l && r <= b) {
-                return dat[k];
-            } else {
-                return min(
-                    query(a, b, k * 2 + 1, l, (l + r) / 2),
-                    query(a, b, k * 2 + 2, (l + r) / 2, r)
-                );
-            }
+    Monoid query(int a, int b) {
+        Monoid L = M1, R = M1;
+        for (a += size, b += size; a < b; a >>= 1, b >>= 1) {
+            if (a & 1) L = f(L, seg[a++]); // 0-indexなので、左が奇数になる
+            if (b & 1) R = f(seg[--b], R);
         }
-    private:
-        int n;
-        int dat[2 * (1 << 17) - 1];
-        int big;
+        return f(L, R);
+    }
+
+    Monoid& operator[] (const int& k) {
+        return seg[k + size];
+    }
 };
 
 class BITree { // 1-index
@@ -73,9 +77,10 @@ class BITree { // 1-index
 };
 
 int main() {
-    SegTree st(8);
-    st.update(0, 5); st.update(1, 3); st.update(2, 7); st.update(3, 9);
-    st.update(4, 6); st.update(5, 4); st.update(6, 1); st.update(7, 2);
+    SegTree<int> st(8, [](int l, int r){ return min(l, r); }, 1e9);
+    st[0] = 5; st[1] = 3; st[2] = 7; st[3] = 9;
+    st[4] = 6; st[5] = 4; st[6] = 1; st[7] = 2;
+    st.build();
 
     assert(st.query(0, 7) == 1);
     st.update(6, 100);
@@ -106,5 +111,6 @@ int main() {
         assert(ans == 4);
     }
     cout << "Binary Index Tree: PASS" << endl;
+
     return 0;
 }
