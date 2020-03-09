@@ -1,6 +1,10 @@
 #include "common.h"
 #include <cassert>
 
+/**
+ * セグメント木
+ * モノイドたちに対して区間操作を行うデータ構造
+ */
 template<typename Monoid>
 class SegTree {
 public:
@@ -9,9 +13,13 @@ public:
     int size;
     Monoid seg[(1 << 18) - 1];
 
-    const F f;
-    const Monoid M1;
+    const F f; // モノイドの二項演算子
+    const Monoid M1; // モノイドの単位元
 
+    /**
+     * 初期化
+     * @order O(N)
+     */
     SegTree(int n, const F _f, const Monoid& _M1) : f(_f), M1(_M1)
     {
         size = 1;
@@ -21,16 +29,20 @@ public:
         }
     }
 
-    void set(int k, const Monoid &x) {
-        seg[k + size] = x;
-    }
-
+    /**
+     * セグ木構築 (セグメントを直接更新したとき用 基本使わない)
+     * @order O(N)
+     */
     void build() {
         for (int k = size - 1; k > 0; k--) {
             seg[k] = f(seg[2 * k], seg[2 * k + 1]);
         }
     }
 
+    /**
+     * セグメント更新
+     * @order O(logN)
+     */
     void update(int k, const Monoid& x) {
         k += size;
         seg[k] = x;
@@ -39,6 +51,10 @@ public:
         }
     }
 
+    /**
+     * 区間クエリ
+     * @order O(logN)
+     */
     Monoid query(int a, int b) {
         Monoid L = M1, R = M1;
         for (a += size, b += size; a < b; a >>= 1, b >>= 1) {
@@ -48,6 +64,10 @@ public:
         return f(L, R);
     }
 
+    /**
+     * セグメントへの直接アクセス(値更新したとき適宜buildが必要)
+     * @order O(1)
+     */
     Monoid& operator[] (const int& k) {
         return seg[k + size];
     }
