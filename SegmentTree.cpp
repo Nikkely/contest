@@ -98,10 +98,7 @@ public:
             const Monoid &M1, const OperatorMonoid OM0)
         : f(f), g(g), h(h), p(p), M1(M1), OM0(OM0)
     {
-        size = 1;
-        while(size < n) size <<= 1;
-        seg.assign(2 * size, M1);
-        lazy.assign(2 * size, OM0);
+        init();
     }
     /**
      * 初期化 (簡易版)
@@ -113,12 +110,7 @@ public:
         p([](OperatorMonoid o, int i){ return o; }),
       M1(M1), OM0(OM0)
     {
-        size = 1;
-        while(size < n) size <<= 1;
-        for (int i = 0; i < 2 * size - 1; i++) {
-            seg[i] = M1;
-            lazy[i] = OM0;
-        }
+        init(n);
     }
     /**
      * 初期化 (超簡易版)
@@ -131,12 +123,17 @@ public:
         p([](OperatorMonoid o, int i){ return o; }),
       M1(M1), OM0(OM0)
     {
+        init(n);
+    }
+    /**
+     * セグ木初期化(初期化処理の共通化)
+     * @order O(N)
+     */
+    void init(int n) {
         size = 1;
         while(size < n) size <<= 1;
-        for (int i = 0; i < 2 * size - 1; i++) {
-            seg[i] = M1;
-            lazy[i] = OM0;
-        }
+        seg.assign(2 * size, M1);
+        lazy.assign(2 * size, OM0);
     }
     /**
      * セグ木構築(セグメントを直接操作したとき用)
