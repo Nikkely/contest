@@ -123,6 +123,14 @@ struct aaa{
         cin.tie(0); ios::sync_with_stdio(0); cout<<fixed<<setprecision(20);
     };
 }aaaaaaa;
+
+/**
+ * Libraries
+ */
+// (paste function or Libraries from ContestLibrary)
+/**
+ * If necessary
+ */
 // #define int long long int
 // struct S{
 //     int x
@@ -130,17 +138,9 @@ struct aaa{
 //         return x < s.x;
 //     }
 // };
-// signed main() {
-//     return 0;
-// }
-
 /**
- * for test
+ * Solver
  */
-bool inline vector_check(vector<int> v1, vector<int> v2) {
-    return v1.size() == v2.size() && equal(v1.cbegin(), v1.cend(), v2.cbegin());
-}
-
-bool inline map_check(map<int, int> m1, map<int, int> m2) {
-    return m1.size() == m2.size() && equal(m1.cbegin(), m1.cend(), m2.cbegin());
+signed main() {
+    return 0;
 }

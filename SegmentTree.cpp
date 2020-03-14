@@ -11,7 +11,7 @@ public:
     using F = function<Monoid(Monoid, Monoid)>;
 
     int size;
-    Monoid seg[(1 << 18) - 1];
+    vector<Monoid> seg;
 
     const F f; // モノイドの二項演算子
     const Monoid M1; // モノイドの単位元
@@ -24,9 +24,7 @@ public:
     {
         size = 1;
         while (size < n) size <<= 1;
-        for (int i = 0; i < 2 * size - 1; i++) {
-            seg[i] = M1;
-        }
+        seg.assign(size, M1);
     }
     /**
      * セグ木構築 (セグメントを直接更新したとき用 基本使わない)
@@ -83,8 +81,8 @@ public:
     using P = function< OperatorMonoid(OperatorMonoid, int) >;
 
     int size;
-    Monoid seg[(1 << 17) - 1]; // セグメント(要素)
-    OperatorMonoid lazy[(1 << 17) - 1]; //伝播を遅延させるため滞留させておく(作用素)
+    vector<Monoid> seg; // セグメント(要素)
+    vector<OperatorMonoid> lazy; //伝播を遅延させるため滞留させておく(作用素)
     const F f; // クエリに用いる演算
     const G g; // 要素と作用素のマージの演算
     const H h; // 作用素と作用素のマージの演算
@@ -102,10 +100,8 @@ public:
     {
         size = 1;
         while(size < n) size <<= 1;
-        for (int i = 0; i < 2 * size - 1; i++) {
-            seg[i] = M1;
-            lazy[i] = OM0;
-        }
+        seg.assign(2 * size, M1);
+        lazy.assign(2 * size, OM0);
     }
     /**
      * 初期化 (簡易版)
