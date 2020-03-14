@@ -98,7 +98,7 @@ public:
             const Monoid &M1, const OperatorMonoid OM0)
         : f(f), g(g), h(h), p(p), M1(M1), OM0(OM0)
     {
-        init();
+        init(n);
     }
     /**
      * 初期化 (簡易版)
