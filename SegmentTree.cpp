@@ -288,23 +288,14 @@ int main() {
         lst.build();
 
         assert(lst.query(0, 7) == 1);
-        cout << "1" << endl;
         lst.update(6, 8, 100);
-        cout << "2" << endl;
         assert(lst.query(0, 6) == 3);
-        cout << "3" << endl;
         lst.update(0, 5, 100);
-        cout << "4" << endl;
         assert(lst.query(3, 8) == 4);
-        cout << "5" << endl;
         lst.update(0, 8, 1000);
-        cout << "6" << endl;
         lst.update(4, 8, 200);
-        cout << "7" << endl;
         lst.update(0, 3, 200);
-        cout << "8" << endl;
         assert(lst.query(0, 8) == 1109);
-        cout << "9" << endl;
     }
     cout << "Lazy Segment Tree: PASS" << endl;
     return 0;
