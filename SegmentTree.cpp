@@ -244,16 +244,18 @@ class BITree { // 1-index
 };
 
 int main() {
-    SegTree<int> st(8, [](int l, int r){ return min(l, r); }, 1e9);
-    st[0] = 5; st[1] = 3; st[2] = 7; st[3] = 9;
-    st[4] = 6; st[5] = 4; st[6] = 1; st[7] = 2;
-    st.build();
+    {
+        SegTree<int> st(8, [](int l, int r){ return min(l, r); }, 1e9);
+        st[0] = 5; st[1] = 3; st[2] = 7; st[3] = 9;
+        st[4] = 6; st[5] = 4; st[6] = 1; st[7] = 2;
+        st.build();
 
-    assert(st.query(0, 7) == 1);
-    st.update(6, 100);
-    assert(st.query(0, 6) == 3);
-    assert(st.query(3, 8) == 2);
-    assert(st.query(3, 4) == 9);
+        assert(st.query(0, 7) == 1);
+        st.update(6, 100);
+        assert(st.query(0, 6) == 3);
+        assert(st.query(3, 8) == 2);
+        assert(st.query(3, 4) == 9);
+    }
     cout << "Segment Tree: PASS" << endl;
 
     // せっかくなので転倒数を求める
@@ -279,20 +281,22 @@ int main() {
     }
     cout << "Binary Index Tree: PASS" << endl;
 
-    LSegTree<int> lst(8, [](int l, int r){ return min(l, r); }, 1e9, 0);
-    lst[0] = 5; lst[1] = 3; lst[2] = 7; lst[3] = 9;
-    lst[4] = 6; lst[5] = 4; lst[6] = 1; lst[7] = 2;
-    lst.build();
+    {
+        LSegTree<int> lst(8, [](int l, int r){ return min(l, r); }, 1e9, 0);
+        lst[0] = 5; lst[1] = 3; lst[2] = 7; lst[3] = 9;
+        lst[4] = 6; lst[5] = 4; lst[6] = 1; lst[7] = 2;
+        lst.build();
 
-    assert(lst.query(0, 7) == 1);
-    lst.update(6, 8, 100);
-    assert(lst.query(0, 6) == 3);
-    lst.update(0, 5, 100);
-    assert(lst.query(3, 8) == 4);
-    lst.update(0, 8, 1000);
-    lst.update(4, 8, 200);
-    lst.update(0, 3, 200);
-    assert(lst.query(0, 8) == 1109);
+        assert(lst.query(0, 7) == 1);
+        lst.update(6, 8, 100);
+        assert(lst.query(0, 6) == 3);
+        lst.update(0, 5, 100);
+        assert(lst.query(3, 8) == 4);
+        lst.update(0, 8, 1000);
+        lst.update(4, 8, 200);
+        lst.update(0, 3, 200);
+        assert(lst.query(0, 8) == 1109);
+    }
     cout << "Lazy Segment Tree: PASS" << endl;
     return 0;
 }
