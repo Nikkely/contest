@@ -31,7 +31,7 @@ using namespace std;
 #define ZERO(a) memset(a,0,sizeof(a))
 #define BIT(n) (1LL<<(n))
 #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
-#define CEIL(x, y) (((x) + (y) - 1) / (y))
+#define CEIL(x, y) (((x) + ((x) > 0 ? (y) - 1 : -((y) - 1))) / (y))
 
 /**
  * Standard input helpers
