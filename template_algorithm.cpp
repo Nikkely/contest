@@ -114,8 +114,9 @@ void dump_func(Head &&head, Tail &&... tail) {
  * Helpers
  */
 typedef long long int lli;
+typedef long double ld;
 typedef pair<int, int> ii;
-typedef priority_queue<int, vector<int>, greater<int> > heapq;
+template<typename T> using heapq = priority_queue<T, vector<T>, greater<T> >;
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 struct aaa{
