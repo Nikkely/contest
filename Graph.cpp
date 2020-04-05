@@ -5,6 +5,7 @@
 
 struct Edge {
     int from, to, cost;
+    Edge(int f, int t, int c): from(f), to(t), cost(c) {};
 };
 
 /**
