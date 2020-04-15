@@ -120,6 +120,8 @@ typedef pair<int, int> ii;
 template<typename T> using heapq = priority_queue<T, vector<T>, greater<T> >;
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
+int exdx[8]={1, 1, 1, 0, 0, -1, -1, -1};
+int exdy[8]={1, 0, -1, 1, -1, 1, 0, -1};
 struct aaa{
     aaa(){
         cin.tie(0); ios::sync_with_stdio(0); cout<<fixed<<setprecision(20);
