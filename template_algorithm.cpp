@@ -136,6 +136,7 @@ struct aaa{
  * If necessary
  */
 // #define int long long int
+// #define INF (1e9 + 1)
 // struct S{
 //     int x
 //     bool operator<(const S& s) const {
