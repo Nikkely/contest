@@ -81,7 +81,7 @@ vector<int> sieve(int n) {
     for (int i = 2; i < n; i++) {
         if (is_prime_arr[i]) {
             ret.push_back(i);
-            for (int j = 2 * i; j <= n; j += i) is_prime_arr[j] = 0;
+            for (int j = 2 * i; j < n; j += i) is_prime_arr[j] = 0;
         }
     }
     return ret;
