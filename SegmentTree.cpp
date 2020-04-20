@@ -24,7 +24,7 @@ public:
     {
         size = 1;
         while (size < n) size <<= 1;
-        seg.assign(size, M1);
+        seg.assign(2 * size, M1);
     }
     /**
      * セグ木構築 (セグメントを直接更新したとき用 基本使わない)
