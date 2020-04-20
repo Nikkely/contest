@@ -24,7 +24,7 @@ public:
     {
         size = 1;
         while (size < n) size <<= 1;
-        seg.assign(size, M1);
+        seg.assign(2 * size, M1);
     }
     /**
      * セグ木構築 (セグメントを直接更新したとき用 基本使わない)
@@ -244,7 +244,6 @@ class BITree { // 1-index
 };
 
 int main() {
-    cout << "Segment Tree TEST" << endl;
     {
         SegTree<int> st(8, [](int l, int r){ return min(l, r); }, 1e9);
         st[0] = 5; st[1] = 3; st[2] = 7; st[3] = 9;
@@ -259,7 +258,6 @@ int main() {
     }
     cout << "Segment Tree: PASS" << endl;
 
-    cout << "Binary Index Tree TEST" << endl;
     // せっかくなので転倒数を求める
     {
         BITree bit(4);
@@ -283,7 +281,6 @@ int main() {
     }
     cout << "Binary Index Tree: PASS" << endl;
 
-    cout << "Lazy Segment Tree TEST" << endl;
     {
         LSegTree<int> lst(8, [](int l, int r){ return min(l, r); }, 1e9, 0);
         lst[0] = 5; lst[1] = 3; lst[2] = 7; lst[3] = 9;
