@@ -6,4 +6,4 @@ os:
   - osx
 
 script:
-  - ./.build.sh
+  - ./run_test.sh
