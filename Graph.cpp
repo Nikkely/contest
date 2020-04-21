@@ -1,4 +1,5 @@
 #include "common.h"
+#include "test_helper.h"
 #include <cassert>
 
 #define INF 1000000007

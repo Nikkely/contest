@@ -1,4 +1,5 @@
 #include "common.h"
+#include "test_helper.h"
 #include <cassert>
 
 template<int MOD> class Modnum {
