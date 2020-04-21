@@ -1,7 +1,8 @@
 #include "common.h"
 #include <cassert>
 
-template<int MOD> struct Modnum {
+template<int MOD> class Modnum {
+public:
     lli val;
     constexpr Modnum(lli v = 0) noexcept : val(v % MOD) {
         if (val < 0) v += MOD;
@@ -69,20 +70,29 @@ template<int MOD> struct Modnum {
 
 using mi = Modnum<1000000007>;
 
-#define MAX_FAC 10000
-mi fac[MAX_FAC], finv[MAX_FAC];
-void init_fac() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    for (int i = 2; i < MAX_FAC; i++) {
-        fac[i] = fac[i - 1] * i;
-        finv[i] = finv[i - 1] * mi::modinv(i);
+template<int MOD = 1000000007>
+class ModMethods {
+public:
+    using mt = Modnum<MOD>;
+    int size;
+    vector<mt> fac, finv;
+
+    ModMethods(int n): size(n) {
+        fac.assign(size, 1);
+        finv.assign(size, 1);
+        fac[0] = fac[1] = 1;
+        finv[0] = finv[1] = 1;
+        for (int i = 2; i < size; i++) {
+            fac[i] = fac[i - 1] * i;
+            finv[i] = finv[i - 1] * mt::modinv(i);
+        }
     }
-}
-inline mi com(int n, int k) {
-    if (n < k || n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k]);
-}
+
+    mt com(int n, int k) {
+        if (n < k || n < 0 || k < 0) return 0;
+        return fac[n] * (finv[k] * finv[n - k]);
+    }
+};
 
 int main() {
     assert(mi(1000000007LL) + mi(1LL) == mi(1LL));
@@ -92,8 +102,8 @@ int main() {
     assert(mi(12LL) / mi(3LL) == mi(4LL));
     cout << "ModIntClass OK" << endl;
 
-    init_fac();
-    assert(com(5LL, 3LL) == mi(10LL));
+    ModMethods<> mm(100000);
+    assert(mm.com(5LL, 3LL) == mi(10LL));
     cout << "Binomial coeffcients OK" << endl;
     return 0;
 }
