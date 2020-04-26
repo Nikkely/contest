@@ -114,24 +114,31 @@ void dump_func(Head &&head, Tail &&... tail) {
 /**
  * Helpers
  */
-typedef long long int lli;
-typedef pair<int, int> ii;
-typedef priority_queue<int, vector<int>, greater<int> > heapq;
+using lli = long long int;
+using ii = pair<int, int>;
+template<typename T>
+using heapq = priority_queue<T, vector<T>, greater<T> >; // implement <
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
+int exdx[8]={1, 1, 1, 0, 0, -1, -1, -1};
+int exdy[8]={1, 0, -1, 1, -1, 1, 0, -1};
 struct aaa{
     aaa(){
         cin.tie(0); ios::sync_with_stdio(0); cout<<fixed<<setprecision(20);
     };
 }aaaaaaa;
+/**
+ * Libraries
+ */
+// (paste function or Libraries from ContestLibrary)
+/**
+ * If necessary
+ */
 // #define int long long int
 // #define INF (1e9 + 1)
-// struct S{
-//     int x
-//     bool operator<(const S& s) const {
-//         return x < s.x;
-//     }
-// };
+/**
+ * Solver
+ */
 // signed main() {
 //     return 0;
 // }
