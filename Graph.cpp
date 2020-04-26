@@ -8,16 +8,16 @@ struct Edge {
     int from, to, cost;
     Edge(){}
     Edge(int f, int t, int c): from(f), to(t), cost(c) {};
-    constexpr bool operator < (const Edge& e) const noexcept {
+    bool operator < (const Edge& e) const noexcept {
         return this->cost < e.cost;
     }
-    constexpr bool operator <= (const Edge& e) const noexcept {
+    bool operator <= (const Edge& e) const noexcept {
         return this->cost <= e.cost;
     }
-    constexpr bool operator > (const Edge& e) const noexcept {
+    bool operator > (const Edge& e) const noexcept {
         return this->cost > e.cost;
     }
-    constexpr bool operator >= (const Edge& e) const noexcept {
+    bool operator >= (const Edge& e) const noexcept {
         return this->cost >= e.cost;
     }
 };
