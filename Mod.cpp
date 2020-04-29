@@ -90,8 +90,14 @@ public:
     }
 
     mt com(int n, int k) {
+#ifdef LOCAL_
+        if (n >= size || k >= size) {
+            cout << "SIZE OVER" << endl;
+            return -1;
+        }
+#endif
         if (n < k || n < 0 || k < 0) return 0;
-        return fac[n] * (finv[k] * finv[n - k]);
+        return fac[n] * finv[k] * finv[n - k];
     }
 };
 
