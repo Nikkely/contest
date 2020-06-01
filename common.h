@@ -34,6 +34,7 @@ using namespace std;
 #define BIT(n) (1LL<<(n))
 #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define CEIL(x, y) (((x) + ((x) > 0 ? (y) - 1 : -((y) - 1))) / (y))
+#define DIST2(x1, y1, x2, y2) (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
 
 /**
  * Standard input helpers
@@ -117,6 +118,7 @@ void dump_func(Head &&head, Tail &&... tail) {
  */
 using lli = long long int;
 using ii = pair<int, int>;
+using ld = long double;
 template<typename T>
 using heapq = priority_queue<T, vector<T>, greater<T> >; // implement <
 int dx[4]={1,0,-1,0};
