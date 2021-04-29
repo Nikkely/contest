@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cpplist=$(ls -a | grep .cpp)
+cpplist=$(cd src/ && ls -a | grep .cpp)
 echo -e "target => \n$cpplist"
 
 targets=$(echo -e $cpplist|xargs)
