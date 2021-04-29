@@ -2,21 +2,21 @@
  * Includes
  */
 #include <algorithm>
+#include <assert.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <math.h>
 #include <queue>
 #include <set>
 #include <stack>
-#include <string>
-#include <unordered_map>
-#include <vector>
-
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -26,6 +26,7 @@ using namespace std;
 // loops
 #define rep(i, n) for (int i = 0, i##_len = (n); i < i##_len; ++i)
 #define rep1(i, n) for (int i = 1, i##_len = (n); i <= i##_len; ++i)
+#define repc(i, n) for (int i = 0, i##_len = (n); i <= i##_len; ++i)
 #define repx(i, s, e, d)                                                       \
   for (int i = (s), i##_end = (e), i##_inc = (d); i < i##_end; i += i##_inc)
 #define repr(i, n) for (int i = (n); i > 0; --i)
@@ -148,5 +149,5 @@ struct PreEntryInitializer {
  * Solver
  */
 // signed main() {
-//     return 0;
+//   return 0;
 // }

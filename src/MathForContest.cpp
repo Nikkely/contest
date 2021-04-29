@@ -5,17 +5,34 @@
 
 /**
  * 最大公約数の絶対値を求める
- * @order: O(logN)
+ * order: O(logN)
  **/
 inline int gcd(int a, int b) {
-  if (b == 0) return abs(a);
+  if (b == 0) {
+    return abs(a);
+  }
   return gcd(b, a % b);
+}
+
+/**
+ * 最大公約数の絶対値を求める
+ * 引数はサイズM(>=1)のvector
+ * order: O(MlogN)
+ **/
+inline int gcd(vector<int> *v) {
+  assert(SIZE(*v));
+  int a = (*v)[0];
+  repx(i, 1, SIZE(*v), 1) {
+    int b = (*v)[i];
+    a = gcd(a, b);
+  }
+  return a;
 }
 
 /**
  * ax + by = gcd(a, b)
  * を満たす整数(x, y)と、gcd(a, b)を求める
- * @order: O(logN);
+ * order: O(logN);
  **/
 inline int extgcd(int a, int b, int &x, int &y) {
   int d = a;
@@ -32,25 +49,27 @@ inline int extgcd(int a, int b, int &x, int &y) {
 
 /**
  * 素数判定
- * @order: O(N^1/2)
+ * order: O(N^1/2)
  **/
 bool is_prime(int n) {
   for (int i = 2; i * i <= n; i++) {
-    if (n % i == 0) return false;
+    if (n % i == 0)
+      return false;
   }
   return n != 1;
 }
 
 /**
  * 約数列挙
- * @order: O(N^1/2)
+ * order: O(N^1/2)
  **/
 vector<int> divisor(int n) {
   vector<int> res;
   for (int i = 1; i * i <= n; i++) {
     if (n % i == 0) {
       res.push_back(i);
-      if (i != n / i) res.push_back(n / i);
+      if (i != n / i)
+        res.push_back(n / i);
     }
   }
   return res;
@@ -58,7 +77,7 @@ vector<int> divisor(int n) {
 
 /**
  * 素因数分解
- * @order: O(N^1/2)
+ * order: O(N^1/2)
  **/
 map<int, int> prime_factor(int n) {
   map<int, int> res;
@@ -68,14 +87,15 @@ map<int, int> prime_factor(int n) {
       n /= i;
     }
   }
-  if (n != 1) res[n] = 1;
+  if (n != 1)
+    res[n] = 1;
   return res;
 }
 
 /**
  * エラトステネスの篩
  * @param: n [2, n) の素数を返す
- * @order: O(NloglogN)
+ * order: O(NloglogN)
  **/
 vector<int> sieve(int n) {
   vector<int> ret;
@@ -83,7 +103,8 @@ vector<int> sieve(int n) {
   for (int i = 2; i < n; i++) {
     if (is_prime_arr[i]) {
       ret.push_back(i);
-      for (int j = 2 * i; j < n; j += i) is_prime_arr[j] = 0;
+      for (int j = 2 * i; j < n; j += i)
+        is_prime_arr[j] = 0;
     }
   }
   return ret;
@@ -93,23 +114,25 @@ vector<int> sieve(int n) {
  * 拡張エラトステネスの篩
  * 要素を割り切る最小の整数を格納した配列を取得
  * @param: n [2, n) の配列を作成
- * @order: O(NloglogN)
+ * order: O(NloglogN)
  **/
 vector<int> ext_sieve(int n) {
   vector<int> min_prime(n, 1);
   for (int i = 2; i < n; i++) {
-    if (min_prime[i] != 1) continue;
+    if (min_prime[i] != 1)
+      continue;
 
     min_prime[i] = i;
     for (int j = 2 * i; j < n; j += i)
-      if (min_prime[j] == 1) min_prime[j] = i;
+      if (min_prime[j] == 1)
+        min_prime[j] = i;
   }
   return min_prime;
 }
 
 /**
  * 高速素因数分解
- * @order: O(logN)
+ * order: O(logN)
  **/
 map<int, int> prime_factor(int n, vector<int> &min_primes) {
   map<int, int> res;
