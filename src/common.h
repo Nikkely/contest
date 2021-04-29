@@ -23,21 +23,45 @@ using namespace std;
 /**
  * Macros
  */
+// loops
 #define rep(i, n) for (int i = 0, i##_len = (n); i < i##_len; ++i)
-#define repx(i, s, e, d) for (int i = s, i##_end = (e); i < i##_end; i += d)
-#define reprx(i, s, e, d) for (int i = s, i##_end = (e); i > i##_end; i += d)
+#define rep1(i, n) for (int i = 1, i##_len = (n); i <= i##_len; ++i)
+#define repx(i, s, e, d)                                                       \
+  for (int i = (s), i##_end = (e), i##_inc = (d); i < i##_end; i += i##_inc)
+#define repr(i, n) for (int i = (n); i > 0; --i)
+#define reprx(i, s, e, d)                                                      \
+  for (int i = (s), i##_end = (e), i##_inc = (d); i > i##_end; i += i##_inc)
 #define rept(n)                                                                \
   for (int ___i___ = 0, i##_len = (n); ___i___ < i##_len; ++___i___)
-#define repi(itr, ds) for (auto itr = ds.begin(); itr != ds.end(); itr++)
+#define repi(itr, ds)                                                          \
+  for (auto itr = (ds).begin(), itr##_end = (ds).end(); itr != itr##_end; itr++)
+// container
+#define SIZE(c) ((int)(c).size())
 #define ALL(x) (x).begin(), (x).end()
-#define SZ(x) ((int)(x).size())
 #define ZERO(a) memset(a, 0, sizeof(a))
-#define BIT(n) (1LL << (n))
-#define UNIQUE(v) v.erase(unique(v.begin(), v.end()), v.end());
 #define CEIL(x, y) (((x) + ((x) > 0 ? (y)-1 : -((y)-1))) / (y))
 #define DIST2(x1, y1, x2, y2)                                                  \
   (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
 
+// shorter
+#define YESNO(bool)                                                            \
+  if (bool) {                                                                  \
+    cout << "YES" << endl;                                                     \
+  } else {                                                                     \
+    cout << "NO" << endl;                                                      \
+  }
+#define yesno(bool)                                                            \
+  if (bool) {                                                                  \
+    cout << "yes" << endl;                                                     \
+  } else {                                                                     \
+    cout << "no" << endl;                                                      \
+  }
+#define YesNo(bool)                                                            \
+  if (bool) {                                                                  \
+    cout << "Yes" << endl;                                                     \
+  } else {                                                                     \
+    cout << "No" << endl;                                                      \
+  }
 /**
  * Standard input helpers
  */
@@ -90,56 +114,36 @@ template <typename T> ostream &operator<<(ostream &os, set<T> &set_var) {
   return os;
 }
 /**
- * Debug tools
- */
-#define DUMPOUT cout
-void dump_func() { DUMPOUT << endl; }
-template <class Head, class... Tail>
-void dump_func(Head &&head, Tail &&... tail) {
-  DUMPOUT << head;
-  if (sizeof...(Tail) > 0) {
-    DUMPOUT << ", ";
-  }
-  dump_func(std::move(tail)...);
-}
-#ifdef LOCAL_
-#define dump(...)                                                              \
-  DUMPOUT << "  " << string(#__VA_ARGS__) << ": "                              \
-          << "[" << to_string(__LINE__) << ":" << __FUNCTION__ << "]" << endl  \
-          << "    ",                                                           \
-      dump_func(__VA_ARGS__)
-#else
-#define dump(...)
-#endif
-
-/**
  * Helpers
  */
-using lli = long long int;
+// type alias
+using ll = long long;
 using ii = pair<int, int>;
 using ld = long double;
+using uint = unsigned int;
+using ull = unsigned long long;
 template <typename T>
 using heapq = priority_queue<T, vector<T>, greater<T>>; // implement <
+// 2d counters
 int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
 int exdx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
 int exdy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
-struct aaa {
-  aaa() {
-    cin.tie(0);
-    ios::sync_with_stdio(0);
-    cout << fixed << setprecision(20);
+// output
+struct PreEntryInitializer {
+  static constexpr int IOS_PREC = 15;
+  PreEntryInitializer() {
+    cin.tie(nullptr);
+    ios::sync_with_stdio(false);
+    cout << fixed << setprecision(IOS_PREC);
   };
-} aaaaaaa;
-/**
- * Libraries
- */
-// (paste function or Libraries from ContestLibrary)
+} preEntryInitializer;
 /**
  * If necessary
  */
 // #define int long long int
-// #define INF (1e9 + 1)
+// #define INF (INT32_MAX / 2)
+// using namespace atcoder; // for atcoder
 /**
  * Solver
  */
