@@ -1,5 +1,5 @@
 #include "common.h"
-#include "test_helper.h"
+#include "testHelper.h"
 #include <cassert>
 class UnionFindWithSize {
 public:

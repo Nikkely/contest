@@ -1,24 +1,25 @@
 #!/bin/bash
 
-cpplist=$(cd src/ && ls -a | grep .cpp)
-echo -e "target => \n$cpplist"
+SRC_DIR="src"
 
-targets=$(echo -e $cpplist|xargs)
+CPPLIST=$(cd $SRC_DIR/ && ls -a | grep .cpp)
+echo -e "target => \n$CPPLIST"
+TARGETS=$(echo -e $CPPLIST|xargs)
 
-okflag=1
-for e in ${targets[@]}; do
+OKFLAG=1
+for e in ${TARGETS[@]}; do
     echo -e "\n***${e}***"
-    clang++ -std=c++14 -fsanitize=address "$e"
+    g++ -g $SRC_DIR/$e -o a.out -std=gnu++17 -Wall -Wextra -Wshadow -Wconversion -ggdb
     ./a.out
     if [ $? -ne 0 ]; then
         echo "!!!FAILUE!!!"
-        okflag=0
+        OKFLAG=0
     else
         echo "===SUCCESS==="
     fi
 done
 
-if [ $okflag -eq 1 ]; then
+if [ $OKFLAG -eq 1 ]; then
     echo -e "\ntest clear"
     exit 0
 else

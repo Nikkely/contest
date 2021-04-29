@@ -1,7 +1,7 @@
 #include <cassert>
 
 #include "common.h"
-#include "test_helper.h"
+#include "testHelper.h"
 
 /**
  * 最大公約数の絶対値を求める

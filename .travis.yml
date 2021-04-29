@@ -1,9 +1,13 @@
 language: cpp
-
 compiler:
   - gcc
 os:
-  - osx
-
+  - linux
+#before_install
 script:
-  - ./test/run_test.sh
+  - test/run_test.sh
+#after_success:
+branches:
+  only:
+    - master
+#notifications:

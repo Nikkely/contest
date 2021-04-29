@@ -36,15 +36,14 @@ using namespace std;
   for (int ___i___ = 0, i##_len = (n); ___i___ < i##_len; ++___i___)
 #define repi(itr, ds)                                                          \
   for (auto itr = (ds).begin(), itr##_end = (ds).end(); itr != itr##_end; itr++)
-// container
+// other
 #define SIZE(c) ((int)(c).size())
 #define ALL(x) (x).begin(), (x).end()
 #define ZERO(a) memset(a, 0, sizeof(a))
-#define CEIL(x, y) (((x) + ((x) > 0 ? (y)-1 : -((y)-1))) / (y))
 #define DIST2(x1, y1, x2, y2)                                                  \
   (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
-
-// shorter
+#define ISEVEN(x) (!((x) % 2))
+#define CEIL(x, y) (((x) + ((x) > 0 ? (y)-1 : -((y)-1))) / (y))
 #define YESNO(bool)                                                            \
   if (bool) {                                                                  \
     cout << "YES" << endl;                                                     \
