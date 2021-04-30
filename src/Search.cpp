@@ -4,7 +4,7 @@
 
 /**
  * めぐる式二分探索
- * Tは四則演算ができればなんでもよい
+ * Tは単調で四則演算実装されてればなんでもよい
  * order: O(log N)
  */
 template <typename T>
@@ -12,7 +12,7 @@ T meguruBinSearch(T okEdge, T ngEdge, function<bool(T)> isOk) {
   T ok = okEdge;
   T ng = ngEdge;
   while (abs(ok - ng) > 1) {
-    T mid = (ok + ng) / 2;
+    T mid = (ok + ng) / 2; // 本当は中点だす演算子を用意したい
     if (isOk(mid)) {
       ok = mid;
     } else {
