@@ -63,6 +63,9 @@ using namespace std;
   } else {                                                                     \
     cout << "No" << endl;                                                      \
   }
+// vector utility
+#define MAX_INDEX(v) ((int)distance(v.begin(), max_element(ALL(v))))
+#define MIN_INDEX(v) ((int)distance(v.begin(), min_element(ALL(v))))
 /**
  * Standard input helpers
  */
@@ -139,11 +142,13 @@ struct PreEntryInitializer {
     cout << fixed << setprecision(IOS_PREC);
   };
 } preEntryInitializer;
+// max/min
+template <typename T> T max(vector<T> v) { return *max_element(v); }
+template <typename T> T min(vector<T> v) { return *min_element(v); }
 /**
  * If necessary
  */
 // #define int long long int
-// #define INF (INT32_MAX / 2)
 // using namespace atcoder; // for atcoder
 /**
  * Solver
