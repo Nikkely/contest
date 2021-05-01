@@ -1,6 +1,5 @@
 #include "common.h"
 #include "testHelper.h"
-#include <cassert>
 
 /**
  * めぐる式二分探索

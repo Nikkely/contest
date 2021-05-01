@@ -1,5 +1,3 @@
-#include <cassert>
-
 #include "common.h"
 #include "testHelper.h"
 

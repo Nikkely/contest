@@ -1,6 +1,6 @@
 #include "common.h"
 #include "testHelper.h"
-#include <cassert>
+
 class UnionFindWithSize {
 public:
   UnionFindWithSize(int N) : parent(N, -1) {}
