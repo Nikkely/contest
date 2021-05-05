@@ -30,13 +30,15 @@ using namespace std;
 #define repc(i, n) for (int i = 0, i##_len = (n); i <= i##_len; ++i)
 #define repx(i, s, e, d)                                                       \
   for (int i = (s), i##_end = (e), i##_inc = (d); i < i##_end; i += i##_inc)
-#define repr(i, n) for (int i = (n); i > 0; --i)
+#define repr(i, n) for (int i = (n - 1); i >= 0; --i)
 #define reprx(i, s, e, d)                                                      \
   for (int i = (s), i##_end = (e), i##_inc = (d); i > i##_end; i += i##_inc)
 #define rept(n)                                                                \
-  for (int ___i___ = 0, i##_len = (n); ___i___ < i##_len; ++___i___)
+  for (int __i__LINE__ = 0, __i__LINE__##_len = (n);                           \
+       __i__LINE__ < __i__LINE__##_len; ++__i__LINE__)
 #define repi(itr, ds)                                                          \
   for (auto itr = (ds).begin(), itr##_end = (ds).end(); itr != itr##_end; itr++)
+#define repz(c) for (char c = 'a'; c <= 'z'; c++)
 // other
 #define SIZE(c) ((int)(c).size())
 #define ALL(x) (x).begin(), (x).end()
@@ -145,11 +147,20 @@ struct PreEntryInitializer {
 // max/min
 template <typename T> T max(vector<T> v) { return *max_element(v); }
 template <typename T> T min(vector<T> v) { return *min_element(v); }
+// string
+inline int ctoi(char c) { return c - 'a'; }
+inline char itoc(int i) {
+  assert(-128 <= i && i <= 128);
+  return i + 'a';
+}
+const int ALPHA_TOTAL = 26;
 /**
  * If necessary
  */
 // #define int long long int
-// using namespace atcoder; // for atcoder
+// #include <atcoder/all>
+// using namespace atcoder;
+
 /**
  * Solver
  */
