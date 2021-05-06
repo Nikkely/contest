@@ -160,19 +160,19 @@ int main() {
   assert(is_prime(7));
   assert(!is_prime(1));
 
-  assert(vector_check(divisor(10), {1, 10, 2, 5}));
-  assert(vector_check(divisor(9), {1, 9, 3}));
+  assert(vector_check<int>(divisor(10), {1, 10, 2, 5}));
+  assert(vector_check<int>(divisor(9), {1, 9, 3}));
 
-  assert(map_check(prime_factor(12), {{2, 2}, {3, 1}}));
-  assert(map_check(prime_factor(9), {{3, 2}}));
+  assert(map_check<int>(prime_factor(12), {{2, 2}, {3, 1}}));
+  assert(map_check<int>(prime_factor(9), {{3, 2}}));
 
-  assert(vector_check(sieve(10), {2, 3, 5, 7}));
-  assert(vector_check(sieve(13), {2, 3, 5, 7, 11}));
+  assert(vector_check<int>(sieve(10), {2, 3, 5, 7}));
+  assert(vector_check<int>(sieve(13), {2, 3, 5, 7, 11}));
 
   auto min_primes = ext_sieve(12 + 1);
-  assert(map_check(prime_factor(12, min_primes), {{2, 2}, {3, 1}}));
+  assert(map_check<int>(prime_factor(12, min_primes), {{2, 2}, {3, 1}}));
   min_primes = ext_sieve(9 + 1);
-  assert(map_check(prime_factor(9, min_primes), {{3, 2}}));
+  assert(map_check<int>(prime_factor(9, min_primes), {{3, 2}}));
 
   cout << "PRIME: PASS" << endl;
 }

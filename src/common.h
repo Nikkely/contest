@@ -125,6 +125,8 @@ template <typename T> ostream &operator<<(ostream &os, set<T> &set_var) {
 // type alias
 using ll = long long;
 using ii = pair<int, int>;
+using il = pair<int, ll>;
+using li = pair<ll, int>;
 using ld = long double;
 using uint = unsigned int;
 using ull = unsigned long long;
@@ -148,11 +150,6 @@ struct PreEntryInitializer {
 template <typename T> T max(vector<T> v) { return *max_element(v); }
 template <typename T> T min(vector<T> v) { return *min_element(v); }
 // string
-inline int ctoi(char c) { return c - 'a'; }
-inline char itoc(int i) {
-  assert(-128 <= i && i <= 128);
-  return i + 'a';
-}
 const int ALPHA_TOTAL = 26;
 /**
  * If necessary
