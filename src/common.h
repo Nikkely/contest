@@ -150,7 +150,7 @@ struct PreEntryInitializer {
 template <typename T> T max(vector<T> v) { return *max_element(v); }
 template <typename T> T min(vector<T> v) { return *min_element(v); }
 // string
-const int ALPHA_TOTAL = 26;
+const int ALPHABET_TOTAL = 26;
 /**
  * If necessary
  */
