@@ -132,11 +132,6 @@ using uint = unsigned int;
 using ull = unsigned long long;
 template <typename T>
 using heapq = priority_queue<T, vector<T>, greater<T>>; // implement <
-// 2d counters
-int dx[4] = {1, 0, -1, 0};
-int dy[4] = {0, 1, 0, -1};
-int exdx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
-int exdy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
 // output
 struct PreEntryInitializer {
   static constexpr int IOS_PREC = 15;
