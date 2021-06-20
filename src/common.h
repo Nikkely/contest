@@ -24,7 +24,7 @@ using namespace std;
 /**
  * Macros
  */
-// loops
+/* loops */
 #define rep(i, n) for (int i = 0, i##_len = (n); i < i##_len; ++i)
 #define rep1(i, n) for (int i = 1, i##_len = (n); i <= i##_len; ++i)
 #define repc(i, n) for (int i = 0, i##_len = (n); i <= i##_len; ++i)
@@ -39,7 +39,7 @@ using namespace std;
 #define repi(itr, ds)                                                          \
   for (auto itr = (ds).begin(), itr##_end = (ds).end(); itr != itr##_end; itr++)
 #define repz(c) for (char c = 'a'; c <= 'z'; c++)
-// other
+/** other utils */
 #define SIZE(c) ((int)(c).size())
 #define ALL(x) (x).begin(), (x).end()
 #define ZERO(a) memset(a, 0, sizeof(a))
@@ -65,25 +65,22 @@ using namespace std;
   } else {                                                                     \
     cout << "No" << endl;                                                      \
   }
-// vector utility
+/** vector utils */
 #define MAX_INDEX(v) ((int)distance(v.begin(), max_element(ALL(v))))
 #define MIN_INDEX(v) ((int)distance(v.begin(), min_element(ALL(v))))
 /**
- * Standard input helpers
+ * Standard input Extends
  */
-// vector:input
 template <typename T> istream &operator>>(istream &is, vector<T> &vec) {
   for (T &x : vec)
     is >> x;
   return is;
 }
-// pair:output
 template <typename T, typename U>
 ostream &operator<<(ostream &os, pair<T, U> &pair_var) {
   os << "(" << pair_var.first << ", " << pair_var.second << ")";
   return os;
 }
-// vector:output
 template <typename T> ostream &operator<<(ostream &os, const vector<T> &vec) {
   os << "{";
   for (int i = 0; i < vec.size(); i++) {
@@ -92,7 +89,9 @@ template <typename T> ostream &operator<<(ostream &os, const vector<T> &vec) {
   os << "}";
   return os;
 }
-// map:output
+/**
+ * Standard output Extends
+ */
 template <typename T, typename U>
 ostream &operator<<(ostream &os, map<T, U> &map_var) {
   os << "{";
@@ -106,7 +105,6 @@ ostream &operator<<(ostream &os, map<T, U> &map_var) {
   os << "}";
   return os;
 }
-// set:output
 template <typename T> ostream &operator<<(ostream &os, set<T> &set_var) {
   os << "{";
   repi(itr, set_var) {
@@ -122,7 +120,7 @@ template <typename T> ostream &operator<<(ostream &os, set<T> &set_var) {
 /**
  * Helpers
  */
-// type alias
+/** type alias */
 using ll = long long;
 using ii = pair<int, int>;
 using il = pair<int, ll>;
@@ -132,7 +130,7 @@ using uint = unsigned int;
 using ull = unsigned long long;
 template <typename T>
 using heapq = priority_queue<T, vector<T>, greater<T>>; // implement <
-// output
+/** output config */
 struct PreEntryInitializer {
   static constexpr int IOS_PREC = 15;
   PreEntryInitializer() {
@@ -141,10 +139,7 @@ struct PreEntryInitializer {
     cout << fixed << setprecision(IOS_PREC);
   };
 } preEntryInitializer;
-// max/min
-template <typename T> T max(vector<T> v) { return *max_element(v); }
-template <typename T> T min(vector<T> v) { return *min_element(v); }
-// string
+/** string utils */
 const int ALPHABET_TOTAL = 26;
 /**
  * If necessary
