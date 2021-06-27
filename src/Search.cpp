@@ -2,7 +2,7 @@
 #include "testHelper.h"
 
 /**
- * 値が最も近い要素のiteratorを返す
+ * ソート済の列から値が最も近い要素のiteratorを返す
  * order: O(Nlog N)
  */
 template <typename T>
