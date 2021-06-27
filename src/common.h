@@ -45,7 +45,7 @@ using namespace std;
 #define ZERO(a) memset(a, 0, sizeof(a))
 #define DIST2(x1, y1, x2, y2)                                                  \
   (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
-#define ISEVEN(x) (!((x) % 2))
+#define IS_EVEN(x) (!((x) % 2))
 #define CEIL(x, y) (((x) + ((x) > 0 ? (y)-1 : -((y)-1))) / (y))
 #define YESNO(bool)                                                            \
   if (bool) {                                                                  \
