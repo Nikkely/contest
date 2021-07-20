@@ -41,3 +41,48 @@ void makeGridWithGuard(Grid<T> &grid, int h, int w, T val, T guard) {
     grid[h + 1][j] = guard;
   }
 }
+/** overload ope */
+template <typename T> istream &operator>>(istream &is, Grid<T> &grid) {
+  for (vector<T> &vec : grid) {
+    for (T &x : vec) {
+      is >> x;
+    }
+  }
+  return is;
+}
+template <typename T> bool operator!=(const Grid<T> &x, const Grid<T> &y) {
+  int h = SIZE(x);
+  if (h != SIZE(y)) {
+    return true;
+  }
+  int w = SIZE(x[0]);
+  if (w != SIZE(y[0])) {
+    return true;
+  }
+
+  rep(i, h) {
+    rep(j, w) {
+      if (x[i][j] != y[i][j]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+template <typename T> bool operator==(const Grid<T> &x, const Grid<T> &y) {
+  return !(x != y);
+}
+const char *G_GRID_OUTPUT_DELIMITER = " ";
+template <typename T> ostream &operator<<(ostream &os, const Grid<T> &grid) {
+  int h = SIZE(grid);
+  int w = SIZE(grid[0]);
+  rep(i, h) {
+    rep(j, w) {
+      os << grid[i][j] << (j + 1 == w ? "" : G_GRID_OUTPUT_DELIMITER);
+    }
+    if (i + 1 != h) {
+      os << endl;
+    }
+  }
+  return os;
+}
