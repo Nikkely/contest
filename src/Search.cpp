@@ -13,7 +13,7 @@ auto searchNearestValue(const vector<T> &v, const T &value) {
   }
 
   auto lit = rit - 1;
-  if (abs(*lit - value) <= abs(*rit - value)) {
+  if (rit == v.end() || abs(*lit - value) <= abs(*rit - value)) {
     return lit;
   }
   return rit;
