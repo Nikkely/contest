@@ -86,3 +86,37 @@ template <typename T> ostream &operator<<(ostream &os, const Grid<T> &grid) {
   }
   return os;
 }
+
+/** 2D Cumulative Sum Utils */
+// makeCumulativeGrid makes cumulative sum grid
+template <typename T>
+void makeCumulativeGrid(Grid<T> &cusum, Grid<T> const &grid, T zero) {
+  const int height = SIZE(grid);
+  const int width = SIZE(grid[0]);
+  makeGridWithGuard(cusum, height, width, zero, zero);
+  rep(h, height) {
+    rep(w, width) {
+      cusum[h + 1][w + 1] =
+          cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
+    }
+  }
+}
+inline void makeCumulativeGrid(Grid<int> &cusum, Grid<int> const &grid) {
+  makeCumulativeGrid<int>(cusum, grid, 0);
+}
+inline void makeCumulativeGrid(Grid<unsigned int> &cusum,
+                               Grid<unsigned int> const &grid) {
+  makeCumulativeGrid<unsigned int>(cusum, grid, 0);
+}
+inline void makeCumulativeGrid(Grid<long long> &cusum,
+                               Grid<long long> const &grid) {
+  makeCumulativeGrid<long long>(cusum, grid, 0LL);
+}
+inline void makeCumulativeGrid(Grid<unsigned long long> &cusum,
+                               Grid<unsigned long long> const &grid) {
+  makeCumulativeGrid<unsigned long long>(cusum, grid, 0LL);
+}
+// calcCusum calculates culmulative sum of [x, x + w) & [y, y + h)
+template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w) {
+  return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] + cusum[y][x];
+}
