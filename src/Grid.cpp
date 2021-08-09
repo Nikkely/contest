@@ -9,114 +9,114 @@ enum class ExDirection { RT = 0, RU, UP, LU, LT, LD, DW, RD };
 int exdx[8] = {1, 1, 0, -1, -1, -1, 0, 1};
 int exdy[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
-/** 2D-array utils */
-template <typename T> using Grid = vector<vector<T>>;
-template <typename T> void makeGrid(Grid<T> &grid, int h, int w) {
-  grid.assign(h, vector<T>(w));
-}
-template <typename T> void makeGrid(Grid<T> &grid, int h, int w, T val) {
-  grid.assign(h, vector<T>(w, val));
-}
-template <typename T>
-void makeGridWithGuard(Grid<T> &grid, int h, int w, T guard) {
-  makeGrid<T>(grid, h + 2, w + 2);
-  rep(i, h) {
-    grid[i][0] = guard;
-    grid[i][w + 1] = guard;
-  }
-  rep(j, w) {
-    grid[0][j] = guard;
-    grid[h + 1][j] = guard;
-  }
-}
-template <typename T>
-void makeGridWithGuard(Grid<T> &grid, int h, int w, T val, T guard) {
-  makeGrid<T>(grid, h + 2, w + 2, val);
-  rep(i, h) {
-    grid[i][0] = guard;
-    grid[i][w + 1] = guard;
-  }
-  rep(j, w) {
-    grid[0][j] = guard;
-    grid[h + 1][j] = guard;
-  }
-}
-/** overload ope */
-template <typename T> istream &operator>>(istream &is, Grid<T> &grid) {
-  for (vector<T> &vec : grid) {
-    for (T &x : vec) {
-      is >> x;
-    }
-  }
-  return is;
-}
-template <typename T> bool operator!=(const Grid<T> &x, const Grid<T> &y) {
-  int h = SIZE(x);
-  if (h != SIZE(y)) {
-    return true;
-  }
-  int w = SIZE(x[0]);
-  if (w != SIZE(y[0])) {
-    return true;
+/** 2D-array class */
+template <typename T> class Grid {
+private:
+  vector<vector<T>> v;
+  bool guard;
+  const char *GRID_OUTPUT_DELIMITER = " ";
+
+public:
+  Grid(int h, int w) : guard(false) { v.assign(h, vector<T>(w)); }
+  Grid(int h, int w, T val) : guard(false) { v.assign(h, vector<T>(w, val)); }
+  Grid(int h, int w, T val, T guardVal) {
+    this.guard = true;
+    v.assign(h + 2, vector<T>(w + 2, val));
+    rep(i, h) { v[i][0] = v[i][w + 1] = guardVal; }
+    rep(j, w) { v[0][j] = v[h + 1][j] = guardVal; }
   }
 
-  rep(i, h) {
-    rep(j, w) {
-      if (x[i][j] != y[i][j]) {
-        return true;
+  /** overload ope */
+  const vector<T> &operator[](int col) const { return v[col]; }
+  vector<T> &operator[](int col) { return v[col]; }
+  bool operator!=(const Grid<T> &grid) {
+    int h = SIZE(this->v);
+    if (h != SIZE(grid.v)) {
+      return true;
+    }
+    int w = SIZE(this->v[0]);
+    if (w != SIZE(grid.v[0])) {
+      return true;
+    }
+    rep(i, h) {
+      rep(j, w) {
+        if (this->v[i][j] != grid.v[i][j]) {
+          return true;
+        }
       }
     }
+    return false;
   }
-  return false;
+  bool operator==(const Grid<T> &grid) { return !(*this != grid); }
+  istream &stdIn(istream &is) {
+    if (!guard) {
+      for (vector<T> &vec : v) {
+        for (T &x : vec) {
+          is >> x;
+        }
+      }
+    } else {
+      int h = SIZE(this->v);
+      int w = SIZE(this->v[0]);
+      repx(i, 1, h + 2, 1) {
+        repx(j, 1, w + 2, 1) { is >> this->v[h][w]; }
+      }
+    }
+    return is;
+  }
+  ostream &stdOut(ostream &os) {
+    int h = SIZE(this.v);
+    int w = SIZE(this.v[0]);
+    rep(i, h) {
+      rep(j, w) {
+        os << this.v[i][j] << (j + 1 == w ? "" : GRID_OUTPUT_DELIMITER);
+      }
+      if (i + 1 != h) {
+        os << endl;
+      }
+    }
+    return os;
+  }
+};
+/** standard io */
+template <typename T> istream &operator>>(istream &is, Grid<T> &grid) {
+  return grid.stdIn(is);
 }
-template <typename T> bool operator==(const Grid<T> &x, const Grid<T> &y) {
-  return !(x != y);
-}
-const char *G_GRID_OUTPUT_DELIMITER = " ";
 template <typename T> ostream &operator<<(ostream &os, const Grid<T> &grid) {
-  int h = SIZE(grid);
-  int w = SIZE(grid[0]);
-  rep(i, h) {
-    rep(j, w) {
-      os << grid[i][j] << (j + 1 == w ? "" : G_GRID_OUTPUT_DELIMITER);
-    }
-    if (i + 1 != h) {
-      os << endl;
-    }
-  }
-  return os;
+  return grid.stdOut(os);
 }
 
 /** 2D Cumulative Sum Utils */
-// makeCumulativeGrid makes cumulative sum grid
-template <typename T>
-void makeCumulativeGrid(Grid<T> &cusum, Grid<T> const &grid, T zero) {
-  const int height = SIZE(grid);
-  const int width = SIZE(grid[0]);
-  makeGridWithGuard(cusum, height, width, zero, zero);
-  rep(h, height) {
-    rep(w, width) {
-      cusum[h + 1][w + 1] =
-          cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
-    }
-  }
-}
-inline void makeCumulativeGrid(Grid<int> &cusum, Grid<int> const &grid) {
-  makeCumulativeGrid<int>(cusum, grid, 0);
-}
-inline void makeCumulativeGrid(Grid<unsigned int> &cusum,
-                               Grid<unsigned int> const &grid) {
-  makeCumulativeGrid<unsigned int>(cusum, grid, 0);
-}
-inline void makeCumulativeGrid(Grid<long long> &cusum,
-                               Grid<long long> const &grid) {
-  makeCumulativeGrid<long long>(cusum, grid, 0LL);
-}
-inline void makeCumulativeGrid(Grid<unsigned long long> &cusum,
-                               Grid<unsigned long long> const &grid) {
-  makeCumulativeGrid<unsigned long long>(cusum, grid, 0LL);
-}
+// TODO: implements
+// template <typename T>
+// void makeCumulativeGrid(Grid<T> &cusum, Grid<T> const &grid, T zero) {
+// const int height = SIZE(grid);
+// const int width = SIZE(grid[0]);
+// makeGridWithGuard(cusum, height, width, zero, zero);
+// rep(h, height) {
+// rep(w, width) {
+// cusum[h + 1][w + 1] =
+// cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
+// }
+// }
+// }
+// inline void makeCumulativeGrid(Grid<int> &cusum, Grid<int> const &grid) {
+// makeCumulativeGrid<int>(cusum, grid, 0);
+// }
+// inline void makeCumulativeGrid(Grid<unsigned int> &cusum,
+//  Grid<unsigned int> const &grid) {
+// makeCumulativeGrid<unsigned int>(cusum, grid, 0);
+// }
+// inline void makeCumulativeGrid(Grid<long long> &cusum,
+//  Grid<long long> const &grid) {
+// makeCumulativeGrid<long long>(cusum, grid, 0LL);
+// }
+// inline void makeCumulativeGrid(Grid<unsigned long long> &cusum,
+//  Grid<unsigned long long> const &grid) {
+// makeCumulativeGrid<unsigned long long>(cusum, grid, 0LL);
+// }
 // calcCusum calculates culmulative sum of [x, x + w) & [y, y + h)
-template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w) {
-  return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] + cusum[y][x];
-}
+// template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w)
+// { return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] +
+// cusum[y][x];
+// }
