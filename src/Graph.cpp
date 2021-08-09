@@ -102,9 +102,43 @@ void dijkstra(int n, int start, const LList &G, vector<ll> &dist,
   }
 }
 
+/**
+ * 01bfs
+ * 距離が0と1だけのグラフに対してのbfs
+ * order: O(V+E)
+ */
+void bfs01(int n, int start, const LList &G, vector<ll> &dist,
+           const ll INF = 1LL << 60) {
+  assert(n == SIZE(dist));
+  rep(i, n) { dist[i] = INF; }
+  dist[start] = 0;
+  deque<int> que;
+  que.push_front(start);
+
+  while (!que.empty()) {
+    int i = que.front();
+    que.pop_front();
+    for (auto jc : G[i]) {
+      int j = jc.first;
+      ll c = jc.second;
+      int d = dist[i] + c;
+      if (d < dist[j]) {
+        dist[j] = d;
+        assert(c == 0LL || c == 1LL);
+        if (c) {
+          que.push_back(j);
+        } else {
+          que.push_front(j);
+        }
+      }
+    }
+  }
+}
+
 void calcTreeDistTest();
 void bellmanFordTest();
 void dijkstraTest();
+void bfs01Test();
 
 int main() {
   calcTreeDistTest();
@@ -113,6 +147,8 @@ int main() {
   cout << "bellmanFord: PASS" << endl;
   dijkstraTest();
   cout << "dijkstra: PASS" << endl;
+  bfs01Test();
+  cout << "01bfs: PASS" << endl;
 }
 
 void calcTreeDistTest() {
@@ -166,5 +202,22 @@ void dijkstraTest() {
   vector<ll> dist(N);
   dijkstra(N, 0, G, dist);
   vector<ll> ans = {0, 1, 3};
+  assert(vector_check(dist, ans));
+}
+
+void bfs01Test() {
+  int N = 5;
+  LList G(N);
+  G[0].push_back(LNode(1, 0));
+  G[1].push_back(LNode(0, 0));
+  G[1].push_back(LNode(2, 1));
+  G[2].push_back(LNode(1, 1));
+  G[1].push_back(LNode(3, 1));
+  G[3].push_back(LNode(1, 1));
+  G[2].push_back(LNode(4, 0));
+  G[4].push_back(LNode(2, 0));
+  vector<ll> dist(N);
+  dijkstra(N, 0, G, dist);
+  vector<ll> ans = {0, 0, 1, 1, 1};
   assert(vector_check(dist, ans));
 }
