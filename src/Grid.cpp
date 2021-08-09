@@ -120,3 +120,8 @@ inline void makeCumulativeGrid(Grid<unsigned long long> &cusum,
 template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w) {
   return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] + cusum[y][x];
 }
+
+int main() {
+  // TODO: impl test
+  return 0;
+}
