@@ -20,7 +20,7 @@ public:
   Grid(int h, int w) : guard(false) { v.assign(h, vector<T>(w)); }
   Grid(int h, int w, T val) : guard(false) { v.assign(h, vector<T>(w, val)); }
   Grid(int h, int w, T val, T guardVal) {
-    this.guard = true;
+    guard = true;
     v.assign(h + 2, vector<T>(w + 2, val));
     rep(i, h) { v[i][0] = v[i][w + 1] = guardVal; }
     rep(j, w) { v[0][j] = v[h + 1][j] = guardVal; }
@@ -56,27 +56,27 @@ public:
         }
       }
     } else {
-      int h = SIZE(this->v);
-      int w = SIZE(this->v[0]);
+      int h = SIZE(v);
+      int w = SIZE(v[0]);
       repx(i, 1, h + 2, 1) {
-        repx(j, 1, w + 2, 1) { is >> this->v[h][w]; }
+        repx(j, 1, w + 2, 1) { is >> v[h][w]; }
       }
     }
     return is;
   }
   ostream &stdOut(ostream &os) {
-    int h = SIZE(this.v);
-    int w = SIZE(this.v[0]);
+    int h = SIZE(v);
+    int w = SIZE(v[0]);
     rep(i, h) {
-      rep(j, w) {
-        os << this.v[i][j] << (j + 1 == w ? "" : GRID_OUTPUT_DELIMITER);
-      }
+      rep(j, w) { os << v[i][j] << (j + 1 == w ? "" : GRID_OUTPUT_DELIMITER); }
       if (i + 1 != h) {
         os << endl;
       }
     }
     return os;
   }
+  int getHeight() { return SIZE(v); }
+  int getWidth() { return SIZE(v[0]); }
 };
 /** standard io */
 template <typename T> istream &operator>>(istream &is, Grid<T> &grid) {
@@ -87,36 +87,29 @@ template <typename T> ostream &operator<<(ostream &os, const Grid<T> &grid) {
 }
 
 /** 2D Cumulative Sum Utils */
-// TODO: implements
-// template <typename T>
-// void makeCumulativeGrid(Grid<T> &cusum, Grid<T> const &grid, T zero) {
-// const int height = SIZE(grid);
-// const int width = SIZE(grid[0]);
-// makeGridWithGuard(cusum, height, width, zero, zero);
-// rep(h, height) {
-// rep(w, width) {
-// cusum[h + 1][w + 1] =
-// cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
-// }
-// }
-// }
-// inline void makeCumulativeGrid(Grid<int> &cusum, Grid<int> const &grid) {
-// makeCumulativeGrid<int>(cusum, grid, 0);
-// }
-// inline void makeCumulativeGrid(Grid<unsigned int> &cusum,
-//  Grid<unsigned int> const &grid) {
-// makeCumulativeGrid<unsigned int>(cusum, grid, 0);
-// }
-// inline void makeCumulativeGrid(Grid<long long> &cusum,
-//  Grid<long long> const &grid) {
-// makeCumulativeGrid<long long>(cusum, grid, 0LL);
-// }
-// inline void makeCumulativeGrid(Grid<unsigned long long> &cusum,
-//  Grid<unsigned long long> const &grid) {
-// makeCumulativeGrid<unsigned long long>(cusum, grid, 0LL);
-// }
-// calcCusum calculates culmulative sum of [x, x + w) & [y, y + h)
-// template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w)
-// { return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] +
-// cusum[y][x];
-// }
+/**
+ * make Cumulative Sum grid
+ * order: O(H*W)
+ */
+template <typename T> Grid<T> makeCumulativeGrid(const Grid<T> &grid, T zero) {
+  const int height = grid.getHeight();
+  const int width = grid.getWidth();
+  Grid<T> cusum(height + 1, width + 1, zero);
+  rep(h, height) {
+    rep(w, width) {
+      cusum[h + 1][w + 1] =
+          cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
+    }
+  }
+}
+/**
+ * calculates culmulative sum of [x, x + w) & [y, y + h)
+ * order: O(1);
+ */
+template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w) {
+  return cusum[y + h][w + x] - cusum[y + h][x] - cusum[y][x + w] + cusum[y][x];
+}
+
+int main() {
+  // TODO: impl test
+}
