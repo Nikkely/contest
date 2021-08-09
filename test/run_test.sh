@@ -7,7 +7,7 @@ echo -e "target => \n$CPPLIST"
 TARGETS=$(echo -e $CPPLIST|xargs)
 
 REPO_URL='https://github.com/atcoder/ac-library.git'
-git clone REPO_URL
+git clone $REPO_URL
 
 OKFLAG=1
 for e in ${TARGETS[@]}; do
