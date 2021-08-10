@@ -2,28 +2,36 @@
 #include "testHelper.h"
 
 /**
+ * 隣接ノード
+ * 頂点番号(int)とそれへの距離(long long)を保持する
+ */
+using LNode = pair<int, long long>;
+/** 隣接リスト */
+using LList = vector<vector<LNode>>;
+
+/**
  * 木の距離を計算
  * とあるノードから数えた木の各要素までの距離を求める
  * order: O(log N)
  */
-void calcTreeDist(int N, int start, const vector<vector<il>> &graph,
-                  vector<ll> &dist, const ll INF = 1 << 29) {
-  assert(0 <= start && start < N);
-  assert(N == SIZE(graph));
-  assert(N == SIZE(dist));
+void calcTreeDist(int n, int start, const LList &graph, vector<ll> &dist,
+                  const ll INF = 1 << 29) {
+  assert(0 <= start && start < n);
+  assert(n == SIZE(graph));
+  assert(n == SIZE(dist));
 
-  rep(i, N) { dist[i] = INF; }
+  rep(i, n) { dist[i] = INF; }
   queue<int> q;
   q.push(start);
   dist[start] = 0;
 
   while (!q.empty()) {
     int pos = q.front();
-    assert(0 <= pos && pos < N);
+    assert(0 <= pos && pos < n);
 
     q.pop();
-    for (il next : graph[pos]) {
-      assert(0 <= next.first && next.first < N);
+    for (LNode next : graph[pos]) {
+      assert(0 <= next.first && next.first < n);
 
       if (dist[next.first] == INF) {
         dist[next.first] = dist[pos] + next.second;
@@ -38,15 +46,15 @@ void calcTreeDist(int N, int start, const vector<vector<il>> &graph,
  * order: O(VE)
  * 負の閉路が存在する場合falseを返す
  */
-bool bellmanFord(int n, int start, const vector<vector<il>> &graph,
-                 vector<ll> &dist, const ll INF = 1LL << 60) {
+bool bellmanFord(int n, int start, const LList &graph, vector<ll> &dist,
+                 const ll INF = 1LL << 60) {
   assert(n == SIZE(graph));
   assert(n == SIZE(dist));
 
   rep(i, n) { dist[i] = INF; }
   dist[start] = 0;
   rep(i, n) {
-    for (il tc : graph[i]) {
+    for (LNode tc : graph[i]) {
       int to = tc.first;
       assert(0 <= to && to < n);
 
@@ -67,7 +75,7 @@ bool bellmanFord(int n, int start, const vector<vector<il>> &graph,
  * ダイクストラ
  * order: O(E + VLogV)
  */
-void dijkstra(int n, int start, const vector<vector<il>> &G, vector<ll> &dist,
+void dijkstra(int n, int start, const LList &G, vector<ll> &dist,
               const ll INF = 1LL << 60) {
   assert(n == SIZE(G));
   assert(n == SIZE(dist));
@@ -81,7 +89,7 @@ void dijkstra(int n, int start, const vector<vector<il>> &G, vector<ll> &dist,
     assert(0 <= from && from < n);
 
     Q.pop();
-    for (il tc : G[from]) {
+    for (LNode tc : G[from]) {
       int to = tc.first;
       assert(0 <= to && to < n);
 
@@ -94,9 +102,43 @@ void dijkstra(int n, int start, const vector<vector<il>> &G, vector<ll> &dist,
   }
 }
 
+/**
+ * 01bfs
+ * 距離が0と1だけのグラフに対してのbfs
+ * order: O(V+E)
+ */
+void bfs01(int n, int start, const LList &G, vector<ll> &dist,
+           const ll INF = 1LL << 60) {
+  assert(n == SIZE(dist));
+  rep(i, n) { dist[i] = INF; }
+  dist[start] = 0;
+  deque<int> que;
+  que.push_front(start);
+
+  while (!que.empty()) {
+    int i = que.front();
+    que.pop_front();
+    for (auto jc : G[i]) {
+      int j = jc.first;
+      ll c = jc.second;
+      int d = dist[i] + c;
+      if (d < dist[j]) {
+        dist[j] = d;
+        assert(c == 0LL || c == 1LL);
+        if (c) {
+          que.push_back(j);
+        } else {
+          que.push_front(j);
+        }
+      }
+    }
+  }
+}
+
 void calcTreeDistTest();
 void bellmanFordTest();
 void dijkstraTest();
+void bfs01Test();
 
 int main() {
   calcTreeDistTest();
@@ -105,16 +147,18 @@ int main() {
   cout << "bellmanFord: PASS" << endl;
   dijkstraTest();
   cout << "dijkstra: PASS" << endl;
+  bfs01Test();
+  cout << "01bfs: PASS" << endl;
 }
 
 void calcTreeDistTest() {
   // https://atcoder.jp/contests/typical90/tasks/typical90_c
   int N = 3;
-  vector<vector<il>> G(N);
-  G[0].push_back(il(1, 1));
-  G[1].push_back(il(1, 1));
-  G[1].push_back(il(2, 1));
-  G[2].push_back(il(1, 1));
+  LList G(N);
+  G[0].push_back(LNode(1, 1));
+  G[1].push_back(LNode(1, 1));
+  G[1].push_back(LNode(2, 1));
+  G[2].push_back(LNode(1, 1));
   vector<ll> dist(N);
   calcTreeDist(N, 0, G, dist);
   vector<ll> ans = {0, 1, 2};
@@ -124,11 +168,11 @@ void calcTreeDistTest() {
 void bellmanFordTest() {
   {
     int N = 3;
-    vector<vector<il>> G(N);
-    G[0].push_back(il(1, 1));
-    G[1].push_back(il(1, 1));
-    G[1].push_back(il(2, 2));
-    G[2].push_back(il(1, 2));
+    LList G(N);
+    G[0].push_back(LNode(1, 1));
+    G[1].push_back(LNode(1, 1));
+    G[1].push_back(LNode(2, 2));
+    G[2].push_back(LNode(1, 2));
     vector<ll> dist(N);
     bellmanFord(N, 0, G, dist);
     vector<ll> ans = {0, 1, 3};
@@ -136,13 +180,13 @@ void bellmanFordTest() {
   }
   {
     int N = 3;
-    vector<vector<il>> G(N);
-    G[0].push_back(il(1, 1));
-    G[1].push_back(il(1, 1));
-    G[1].push_back(il(2, 2));
-    G[2].push_back(il(1, 2));
-    G[2].push_back(il(0, -1));
-    G[0].push_back(il(2, -1));
+    LList G(N);
+    G[0].push_back(LNode(1, 1));
+    G[1].push_back(LNode(1, 1));
+    G[1].push_back(LNode(2, 2));
+    G[2].push_back(LNode(1, 2));
+    G[2].push_back(LNode(0, -1));
+    G[0].push_back(LNode(2, -1));
     vector<ll> dist(N);
     assert(!bellmanFord(N, 0, G, dist));
   }
@@ -150,13 +194,30 @@ void bellmanFordTest() {
 
 void dijkstraTest() {
   int N = 3;
-  vector<vector<il>> G(N);
-  G[0].push_back(il(1, 1));
-  G[1].push_back(il(1, 1));
-  G[1].push_back(il(2, 2));
-  G[2].push_back(il(1, 2));
+  LList G(N);
+  G[0].push_back(LNode(1, 1));
+  G[1].push_back(LNode(1, 1));
+  G[1].push_back(LNode(2, 2));
+  G[2].push_back(LNode(1, 2));
   vector<ll> dist(N);
   dijkstra(N, 0, G, dist);
   vector<ll> ans = {0, 1, 3};
+  assert(vector_check(dist, ans));
+}
+
+void bfs01Test() {
+  int N = 5;
+  LList G(N);
+  G[0].push_back(LNode(1, 0));
+  G[1].push_back(LNode(0, 0));
+  G[1].push_back(LNode(2, 1));
+  G[2].push_back(LNode(1, 1));
+  G[1].push_back(LNode(3, 1));
+  G[3].push_back(LNode(1, 1));
+  G[2].push_back(LNode(4, 0));
+  G[4].push_back(LNode(2, 0));
+  vector<ll> dist(N);
+  dijkstra(N, 0, G, dist);
+  vector<ll> ans = {0, 0, 1, 1, 1};
   assert(vector_check(dist, ans));
 }
