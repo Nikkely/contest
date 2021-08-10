@@ -29,7 +29,7 @@ public:
   /** overload ope */
   const vector<T> &operator[](int col) const { return v[col]; }
   vector<T> &operator[](int col) { return v[col]; }
-  bool operator!=(const Grid<T> &grid) {
+  bool operator!=(const Grid<T> &grid) const {
     int h = SIZE(this->v);
     if (h != SIZE(grid.v)) {
       return true;
@@ -47,7 +47,7 @@ public:
     }
     return false;
   }
-  bool operator==(const Grid<T> &grid) { return !(*this != grid); }
+  bool operator==(const Grid<T> &grid) const { return !(*this != grid); }
   istream &stdIn(istream &is) {
     if (!guard) {
       for (vector<T> &vec : v) {
