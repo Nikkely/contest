@@ -64,7 +64,7 @@ public:
     }
     return is;
   }
-  ostream &stdOut(ostream &os) {
+  ostream &stdOut(ostream &os) const {
     int h = SIZE(v);
     int w = SIZE(v[0]);
     rep(i, h) {
@@ -75,8 +75,8 @@ public:
     }
     return os;
   }
-  int getHeight() { return SIZE(v); }
-  int getWidth() { return SIZE(v[0]); }
+  int h() const { return SIZE(v); }
+  int w() const { return SIZE(v[0]); }
 };
 /** standard io */
 template <typename T> istream &operator>>(istream &is, Grid<T> &grid) {
@@ -92,8 +92,8 @@ template <typename T> ostream &operator<<(ostream &os, const Grid<T> &grid) {
  * order: O(H*W)
  */
 template <typename T> Grid<T> makeCumulativeGrid(const Grid<T> &grid, T zero) {
-  const int height = grid.getHeight();
-  const int width = grid.getWidth();
+  const int height = grid.h();
+  const int width = grid.w();
   Grid<T> cusum(height + 1, width + 1, zero);
   rep(h, height) {
     rep(w, width) {
@@ -101,6 +101,7 @@ template <typename T> Grid<T> makeCumulativeGrid(const Grid<T> &grid, T zero) {
           cusum[h + 1][w] + cusum[h][w + 1] - cusum[h][w] + grid[h][w];
     }
   }
+  return cusum;
 }
 /**
  * calculates culmulative sum of [x, x + w) & [y, y + h)
@@ -111,5 +112,29 @@ template <typename T> T calcCusum(Grid<T> &cusum, int y, int x, int h, int w) {
 }
 
 int main() {
-  // TODO: impl test
+  int H = 10, W = 10;
+  Grid<int> A(H, W);
+  assert(A.h() == H);
+  assert(A.w() == W);
+  rep(i, H) {
+    rep(j, W) { A[i][j] = 1; }
+  }
+  Grid<int> B(H, W, 1);
+  assert(A == B);
+
+  Grid<int> C(H, W, 1, -1);
+  assert(C[0][0] == -1);
+  cout << "Grid:PASS" << endl;
+
+  Grid<int> D(3, 3, 0);
+  D[0][0] = 1;
+  D[1][1] = 1;
+  D[1][2] = 1;
+  D[2][2] = 1;
+  auto E = makeCumulativeGrid(D, 0);
+  assert(calcCusum(E, 0, 0, 1, 1) == 1);
+  assert(calcCusum(E, 0, 0, 3, 3) == 4);
+  assert(calcCusum(E, 1, 1, 2, 2) == 3);
+  cout << "CUMULATIVE SUM: PASS" << endl;
+  return 0;
 }
